@@ -7,18 +7,29 @@
     "web": "expo start --web"
   },
   "dependencies": {
-    "@expo/vector-icons": "^13.0.0",
+    "@expo/vector-icons": "latest",
     "expo": "^49.0.16",
-    "expo-constants": "^14.4.2",
-    "expo-sqlite": "~11.3.3",
-    "expo-status-bar": "~1.6.0",
-    "lodash.debounce": "*",
-    "react": "18.2.0",
-    "react-native": "^0.72.6",
-    "react-native-paper": "4.9.2"
+    "expo-constants": "latest",
+    "expo-sqlite": "latest",
+    "expo-status-bar": "latest",
+    "lodash.debounce": "latest",
+    "react": "latest",
+    "react-native": "latest",
+    "@react-native-async-storage/async-storage": "latest",
+    "@react-navigation/native": "latest",
+    "@react-navigation/native-stack": "latest",
+    "expo-checkbox": "latest",
+    "expo-image-picker": "latest",
+    "react-native-pager-view": "latest",
+    "react-native-paper": "latest",
+    "react-native-safe-area-context": "latest",
+    "react-native-screens": "latest",
+    "expo-font": "latest",
+    "expo-splash-screen": "latest",
+    "expo-updates": "latest"
   },
   "devDependencies": {
-    "@babel/core": "^7.12.9"
+    "@babel/core": "latest"
   },
   "private": true
 }

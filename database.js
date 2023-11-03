@@ -1,5 +1,5 @@
 import * as SQLite from 'expo-sqlite';
-import { SECTION_LIST_MOCK_DATA } from './utils';
+import { SECTION_LIST_MOCK_DATA } from './utils/utils';
 
 const db = SQLite.openDatabase('little_lemon');
 
