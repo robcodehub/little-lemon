@@ -5,7 +5,9 @@
 The below video shows a walkthrough of the app and it's features. </br>
 Click play on the below video to view the app features:
 
-https://github.com/robcodehub/littlelemon/assets/50296456/ce17f36f-19aa-4540-ab52-11973b39fab6
+https://github.com/robcodehub/little-lemon/assets/50296456/6971fce3-5727-4c5f-89ab-c72120a64272
+
+
 
 ## About the Brand
 
@@ -44,6 +46,14 @@ The restaurant features a locally-sourced menu with daily specials.
 ### Photo Guidelines
 <img src="Images/Photo-guidelines.png" width="800" height="500">
 
+
+### Trade-offs
+
+- One of the major trade-offs when developing an app is whether to use native development such as Swift / Kotlin or a cross platform option such as React Native. 
+- I have created this app in both Swift and React Native and a demo video with screenshots showing the comparison is below:
+
+https://github.com/robcodehub/littlelemon/assets/50296456/ce17f36f-19aa-4540-ab52-11973b39fab6
+
 ## Designs and Prototypes
 
 ### Onboarding, Home and User Profile screens 
@@ -68,10 +78,7 @@ The below video demostrates a walkthrough of the app and it's features.</br>
 This was provided at the start of the readme, but is included for end of the readme as well for convenience.</br></br> 
 Click play on the below video to view the app features:
 
-https://github.com/robcodehub/littlelemon/assets/50296456/ce17f36f-19aa-4540-ab52-11973b39fab6
-
-
-
+https://github.com/robcodehub/little-lemon/assets/50296456/6971fce3-5727-4c5f-89ab-c72120a64272
 
 
 
