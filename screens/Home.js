@@ -29,11 +29,6 @@ const API_URL =
 const sections = ["starters", "mains", "desserts"];
 
 const Item = ({ name, price, description, image }) => {
-
-    console.log("=========ITEM=========")
-    console.log(name, price, description, image)
-    console.log("=========ITEM=========")
-
     return (<View style={styles.item}>
         <View style={styles.itemBody}>
             <Text style={styles.name}>{name}</Text>
@@ -72,9 +67,6 @@ const Home = ({ navigation }) => {
         try {
             const response = await fetch(API_URL);
             const json = await response.json();
-            console.log("=========JSON=========")
-            console.log(json)
-            console.log("=========JSON=========")
             const menu = json.menu.map((item, index) => ({
                 id: index + 1,
                 name: item.name,
@@ -83,9 +75,6 @@ const Home = ({ navigation }) => {
                 image: item.image,
                 category: item.category,
             }));
-            console.log("=========menu=========")
-            console.log(menu)
-            console.log("=========menu=========")
             return menu;
         } catch (error) {
             console.error(error);
