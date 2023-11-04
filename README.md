@@ -1,4 +1,4 @@
-# Little Lemon iOS Capstone Project
+# Little LemonReact Native Capstone Project
 
 ### Video of App Features
 
