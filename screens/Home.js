@@ -15,34 +15,25 @@ import {
     getMenuItems,
     saveMenuItems,
     filterByQueryAndCategories,
-} from "../database";
+} from "../utils/database";
 import Filters from "../components/Filters";
 import { getSectionListData, useUpdateEffect } from "../utils/utils";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import Constants from "expo-constants";
 import * as Font from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
-import { offlineMenu } from "../utils/offline-data";
 
 const API_URL =
-    "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json";
-const sections = ["starters", "mains", "desserts"];
+    'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu-items-by-category.json';
+const sections = ['Appetizers', 'Salads', 'Beverages'];
 
-const Item = ({ name, price, description, image }) => {
-    return (<View style={styles.item}>
-        <View style={styles.itemBody}>
-            <Text style={styles.name}>{name}</Text>
-            <Text style={styles.description}>{description}</Text>
-            <Text style={styles.price}>${price}</Text>
-        </View>
-        <Image
-            style={styles.itemImage}
-            source={{
-                uri: `https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/${image}?raw=true`,
-            }}
-        />
-    </View>)
-};
+const Item = ({ title, price }) => (
+    <View style={styles.item}>
+        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.price}>${price}</Text>
+    </View>
+);
+
 
 const Home = ({ navigation }) => {
     const [profile, setProfile] = useState({
@@ -64,39 +55,41 @@ const Home = ({ navigation }) => {
     );
 
     const fetchData = async () => {
+        // 1. Implement this function
+        // Fetch the menu from the API_URL endpoint. You can visit the API_URL in your browser to inspect the data returned
+        // The category field comes as an object with a property called "title". You just need to get the title value and set it under the key "category".
+        // So the server response should be slighly transformed in this function (hint: map function) to flatten out each menu item in the array,
+
         try {
-            const response = await fetch(API_URL);
-            const json = await response.json();
-            const menu = json.menu.map((item, index) => ({
-                id: index + 1,
-                name: item.name,
-                price: item.price.toString(),
-                description: item.description,
-                image: item.image,
-                category: item.category,
-            }));
-            return menu;
-        } catch (error) {
-            console.error(error);
-        } finally {
+            const repsonse = await fetch(API_URL);
+            const jsonResponse = await repsonse.json();
+            const menuItems = jsonResponse.menu.map((item) => {
+                return {
+                    ...item,
+                    category: item.category.title
+                }
+            });
+            return menuItems;
         }
-    };
+        catch (error) {
+            console.error(error)
+        }
+        return [];
+    }
 
     useEffect(() => {
         (async () => {
-            let menuItems = [];
             try {
                 await createTable();
-                menuItems = await getMenuItems();
-                // if (!menuItems.length) {
-                    menuItems = await fetchData();
+                    // The application fetches data each time to prevent errors when testing and reviewing
+                    // This can be optimized to only fetch the data once and then save it in the database
+                    const menuItems = await fetchData();
                     saveMenuItems(menuItems);
-                // }
+  
                 const sectionListData = getSectionListData(menuItems);
                 setData(sectionListData);
-                const getProfile = await AsyncStorage.getItem("profile");
-                setProfile(JSON.parse(getProfile));
             } catch (e) {
+                // Handle error
                 Alert.alert(e.message);
             }
         })();
@@ -105,7 +98,8 @@ const Home = ({ navigation }) => {
     useUpdateEffect(() => {
         (async () => {
             const activeCategories = sections.filter((s, i) => {
-                if (filterSelections.every(item => item === false)) {
+                // If all filters are deselected, all categories are active
+                if (filterSelections.every((item) => item === false)) {
                     return true;
                 }
                 return filterSelections[i];
@@ -123,18 +117,18 @@ const Home = ({ navigation }) => {
         })();
     }, [filterSelections, query]);
 
-    const lookup = useCallback(q => {
+    const lookup = useCallback((q) => {
         setQuery(q);
     }, []);
 
     const debouncedLookup = useMemo(() => debounce(lookup, 500), [lookup]);
 
-    const handleSearchChange = text => {
+    const handleSearchChange = (text) => {
         setSearchBarText(text);
         debouncedLookup(text);
     };
 
-    const handleFiltersChange = async index => {
+    const handleFiltersChange = async (index) => {
         const arrayCopy = [...filterSelections];
         arrayCopy[index] = !filterSelections[index];
         setFilterSelections(arrayCopy);
@@ -231,17 +225,12 @@ const Home = ({ navigation }) => {
             <SectionList
                 style={styles.sectionList}
                 sections={data}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <Item
-                        name={item.name}
-                        price={item.price}
-                        description={item.description}
-                        image={item.image}
-                    />
+                    <Item title={item.title} price={item.price} />
                 )}
-                renderSectionHeader={({ section: { name } }) => (
-                    <Text style={styles.itemHeader}>{name}</Text>
+                renderSectionHeader={({ section: { title } }) => (
+                    <Text style={styles.header}>{title}</Text>
                 )}
             />
         </View>
@@ -275,12 +264,10 @@ const styles = StyleSheet.create({
         shadowOpacity: 0,
     },
     item: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        borderTopWidth: 1,
-        borderTopColor: "#cccccc",
-        paddingVertical: 10,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        padding: 16,
     },
     itemBody: {
         flex: 1,
@@ -305,6 +292,12 @@ const styles = StyleSheet.create({
         fontFamily: "Karla-Medium",
     },
     price: {
+        fontSize: 20,
+        color: "#EE9972",
+        paddingTop: 5,
+        fontFamily: "Karla-Medium",
+    },
+    title: {
         fontSize: 20,
         color: "#EE9972",
         paddingTop: 5,

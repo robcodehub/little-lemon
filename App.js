@@ -7,10 +7,10 @@ import Profile from "./screens/Profile";
 import SplashScreen from "./screens/SpashScreen";
 import Home from "./screens/Home";
 import { StatusBar } from "expo-status-bar";
-
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "./contexts/AuthContext";
+
 
 const Stack = createNativeStackNavigator();
 

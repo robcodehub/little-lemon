@@ -14,7 +14,7 @@ import { validateEmail, validateName } from "../utils/utils";
 import Constants from "expo-constants";
 
 import { AuthContext } from "../contexts/AuthContext";
-import { useFonts } from "expo-font";
+import * as Font from 'expo-font';
 import * as SplashScreen from "expo-splash-screen";
 
 const Onboarding = () => {
@@ -30,14 +30,19 @@ const Onboarding = () => {
   const { onboard } = useContext(AuthContext);
 
   // FONTS
-  const [fontsLoaded] = useFonts({
-    "Karla-Regular": require("../assets/fonts/Karla-Regular.ttf"),
-    "Karla-Medium": require("../assets/fonts/Karla-Medium.ttf"),
-    "Karla-Bold": require("../assets/fonts/Karla-Bold.ttf"),
-    "Karla-ExtraBold": require("../assets/fonts/Karla-ExtraBold.ttf"),
-    "MarkaziText-Regular": require("../assets/fonts/MarkaziText-Regular.ttf"),
-    "MarkaziText-Medium": require("../assets/fonts/MarkaziText-Medium.ttf"),
-  });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+      await Font.loadAsync({
+          "Karla-Regular": require("../assets/fonts/Karla-Regular.ttf"),
+          "Karla-Medium": require("../assets/fonts/Karla-Medium.ttf"),
+          "Karla-Bold": require("../assets/fonts/Karla-Bold.ttf"),
+          "Karla-ExtraBold": require("../assets/fonts/Karla-ExtraBold.ttf"),
+          "MarkaziText-Regular": require("../assets/fonts/MarkaziText-Regular.ttf"),
+          "MarkaziText-Medium": require("../assets/fonts/MarkaziText-Medium.ttf"),
+      });
+      setFontsLoaded(true);
+  };
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {

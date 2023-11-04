@@ -15,8 +15,8 @@ import { AuthContext } from "../contexts/AuthContext";
 import Checkbox from "expo-checkbox";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ImagePicker from "expo-image-picker";
-import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
+import * as Font from 'expo-font';
 
 const Profile = () => {
   const [profile, setProfile] = useState({
@@ -71,14 +71,19 @@ const Profile = () => {
   };
 
   // FONTS
-  const [fontsLoaded] = useFonts({
-    "Karla-Regular": require("../assets/fonts/Karla-Regular.ttf"),
-    "Karla-Medium": require("../assets/fonts/Karla-Medium.ttf"),
-    "Karla-Bold": require("../assets/fonts/Karla-Bold.ttf"),
-    "Karla-ExtraBold": require("../assets/fonts/Karla-ExtraBold.ttf"),
-    "MarkaziText-Regular": require("../assets/fonts/MarkaziText-Regular.ttf"),
-    "MarkaziText-Medium": require("../assets/fonts/MarkaziText-Medium.ttf"),
-  });
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const loadFonts = async () => {
+      await Font.loadAsync({
+          "Karla-Regular": require("../assets/fonts/Karla-Regular.ttf"),
+          "Karla-Medium": require("../assets/fonts/Karla-Medium.ttf"),
+          "Karla-Bold": require("../assets/fonts/Karla-Bold.ttf"),
+          "Karla-ExtraBold": require("../assets/fonts/Karla-ExtraBold.ttf"),
+          "MarkaziText-Regular": require("../assets/fonts/MarkaziText-Regular.ttf"),
+          "MarkaziText-Medium": require("../assets/fonts/MarkaziText-Medium.ttf"),
+      });
+      setFontsLoaded(true);
+  };
 
   const onLayoutRootView = useCallback(async () => {
     if (fontsLoaded) {
