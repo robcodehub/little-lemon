@@ -24,22 +24,13 @@ import { useFonts } from "expo-font";
 import * as SplashScreen from "expo-splash-screen";
 
 const API_URL =
-  "https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/capstone.json";
-const sections = ["starters", "mains", "desserts"];
+  'https://raw.githubusercontent.com/Meta-Mobile-Developer-PC/Working-With-Data-API/main/menu-items-by-category.json';
+const sections = ['Appetizers', 'Salads', 'Beverages'];
 
-const Item = ({ name, price, description, image }) => (
+const Item = ({ title, price }) => (
   <View style={styles.item}>
-    <View style={styles.itemBody}>
-      <Text style={styles.name}>{name}</Text>
-      <Text style={styles.description}>{description}</Text>
-      <Text style={styles.price}>${price}</Text>
-    </View>
-    <Image
-      style={styles.itemImage}
-      source={{
-        uri: `https://github.com/Meta-Mobile-Developer-PC/Working-With-Data-API/blob/main/images/${image}?raw=true`,
-      }}
-    />
+    <Text style={styles.title}>{title}</Text>
+    <Text style={styles.title}>${price}</Text>
   </View>
 );
 
@@ -223,15 +214,10 @@ const Home = ({ navigation }) => {
         sections={data}
         keyExtractor={item => item.id}
         renderItem={({ item }) => (
-          <Item
-            name={item.name}
-            price={item.price}
-            description={item.description}
-            image={item.image}
-          />
+            <Item title={item.title} price={item.price} />
         )}
-        renderSectionHeader={({ section: { name } }) => (
-          <Text style={styles.itemHeader}>{name}</Text>
+        renderSectionHeader={({ section: { title } }) => (
+            <Text style={styles.header}>{title}</Text>
         )}
       />
     </View>
